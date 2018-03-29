@@ -14,9 +14,12 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 import unittest
 from rest_api_controller import RestAPIController
 
+
 class TestRestAPIController(unittest.TestCase):
+
     """Unittest Class
     """
+
     def test_rest_api(self):
         """Global test
         """
@@ -36,7 +39,6 @@ class TestRestAPIController(unittest.TestCase):
         my_api = RestAPIController(host="http://api.open-notify.org")
         my_api.request("GET", "/iss-now.json")
         self.assertTrue(my_api.get_request_status())
-
 
 if __name__ == '__main__':
     """If main...
