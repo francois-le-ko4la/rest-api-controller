@@ -12,6 +12,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 """
 
 import unittest
+import sys
 from rest_api_controller import RestAPIController
 
 

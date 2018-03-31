@@ -9,7 +9,7 @@ We provide examples to use it.
 The following files comprise the rest-api-controller package:
 * LICENSE: The license file. rest-api-controller is released under the terms of
   the GNU General Public License (GPL), version 3.
-* README.rst: This readme file.
+* README.md: This readme file.
 * setup.py: The setuptools setup file. See above for installation instructions
 * test_rest_api_controller.py : Test
 

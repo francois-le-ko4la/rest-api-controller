@@ -49,6 +49,8 @@ setup(
     author_email='francois@le.ko4la.fr',
     license='',
     packages=['rest_api_controller'],
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest'],
     test_suite="tests.test_rest_api_controller",
     zip_safe=False
     )
