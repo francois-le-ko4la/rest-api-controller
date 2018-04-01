@@ -10,10 +10,12 @@ This script is provided in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 """
-
 import unittest
+import os
 import sys
-from rest_api_controller import RestAPIController
+sys.path.insert(0, os.path.abspath(
+    os.path.join(os.path.dirname(__file__), '..')))
+from rest_api_controller.rest_api_controller import RestAPIController
 
 
 class TestRestAPIController(unittest.TestCase):
@@ -41,7 +43,9 @@ class TestRestAPIController(unittest.TestCase):
         my_api.request("GET", "/iss-now.json")
         self.assertTrue(my_api.get_request_status())
 
+
 if __name__ == '__main__':
     """If main...
     """
+    print(sys.path)
     unittest.main()
