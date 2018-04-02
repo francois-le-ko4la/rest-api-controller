@@ -4,72 +4,89 @@
 We provide examples to use it.
 
 The following files comprise the `rest-api-controller` package:
-* `LICENSE`: The license file. rest-api-controller is released under the terms
-of the GNU General Public License (GPL), version 3.
+* `LICENSE`: The license file. `rest-api-controller` is released under the
+terms of the GNU General Public License (GPL), version 3.
 * `README.md`: This readme file.
 * `Makefile`: Generic management tasks.
 * `setup.py`: Package and distribution management.
 * `setup.cfg`: The setuptools setup file.
 * `test_rest_api_controller.py` : Test
 
-The package contents itself are in the rest_api_controller directory:
+The package contents itself are in the `rest_api_controller` directory:
 * `__ init __`.py: Initialization file for the Python package.
 * `rest_api_controller/rest_api_controller.py`: The code of interest.
 
 ## Setup:
-
-    git clone https://github.com/francois-le-ko4la/rest-api-controller.git
-    cd rest-api-controller
-    sudo make install
+```shell
+git clone https://github.com/francois-le-ko4la/rest-api-controller.git
+cd rest-api-controller
+make install
 
 ## Test:
+```shell
+make test
+```
 
-    sudo make test
-
-## How to use this Class:
+## Use:
 
 * Import the package
 ```python
-    from rest_api_controller import RestAPIController
+from rest_api_controller import RestAPIController
 ```
 
-* API wo authentication
+* API wo authentication using tests
 ```python
-    import time
-    my_api = RestAPIController(host="http://api.open-notify.org",
-        DEBUG=True)
-    my_api.request("GET", "/iss-now.json")
-    obj=my_api.get()
-    print(obj)
-    print(time.ctime(int(obj['timestamp'])))
-    print(obj['iss_position']['longitude'] + ", " +
-        obj['iss_position']['latitude'])
+import time
+
+
+#init the Class
+my_api = RestAPIController(host="http://api.open-notify.org",
+    DEBUG=True)
+
+# test if we can reach the server
+if my_api.isconnected() is not True:
+    print("Server unreachable...")
+    exit(1)
+
+# send the request
+my_api.request("GET", "/iss-now.json")
+
+# get the request status
+if my_api.isrequested() is not True:
+    print("Request errot...")
+    exit(1)
+
+# use the result
+obj=my_api.get()
+print(obj)
+print(time.ctime(int(obj['timestamp'])))
+print(obj['iss_position']['longitude'] + ", " +
+    obj['iss_position']['latitude'])
 ```
 
 * API OAuth1 (username / token) - GITHUB
 ```python
-    my_github_api = RestAPIController(
-        host = "https://api.github.com",
-        auth = ("*** USERNAME ***", "*** TOKEN ***"),
-        DEBUG= True
-        )
-    my_github_api.request("GET", "/user")
-    print(my_github_api.get())
+my_github_api = RestAPIController(
+    host = "https://api.github.com",
+    auth = ("*** USERNAME ***", "*** TOKEN ***"),
+    DEBUG= True
+    )
+my_github_api.request("GET", "/user")
+print(my_github_api.get())
 ```
 
 * OAuth Token - Facebook
 ```python
-    my_fb_api = RestAPIController(
-        token=("OAuth", "*** TOKEN ***"),
-        #host = "http://httpbin.org/status/404"
-        host = "https://graph.facebook.com",
-        DEBUG = True
-        )
+my_fb_api = RestAPIController(
+    token=("OAuth", "*** TOKEN ***"),
+    host = "https://graph.facebook.com",
+    DEBUG = True
+    )
 
-    my_fb_api.request("GET", "/v2.12/me/taggable_friends",
-         {'fields':'id, name, picture.width(500).height(500).type(large)',
-         'limit':'5000'})
-    friendsList = my_fb_api.get()
+my_fb_api.request("GET", "/v2.12/me/taggable_friends",
+    {'fields':'id, name, picture.width(500).height(500).type(large)',
+    'limit':'5000'})
+friendsList = my_fb_api.get()
 ```
 
 ## Todo:
@@ -96,104 +113,130 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 ## Dev docstring
-### Class RestAPIController:
-My REST API Controller
-    
+### RestAPIController
 
-#### Function RestAPIController.__enable_debug(self):
+````python
+class RestAPIController:
+````
 
-```
-Enable Debug
--> connection log
+><br />
+> My REST API Controller <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    <br />
+> <br />
 
-Args:
-    None
-
-Returns:
-    None
-```
-
-#### Function RestAPIController.__init__(self, *args, **kwargs):
-
-```
-Init the RestAPIController Class
-This function define attributes.
-
-Args:
-    *arg/**kwargs
-        auth(dict)
-        token(dict)
-        host(string)
-        DEBUG(bool)
-
-Attributes:
-    self.__connected(bool)
-    self.__requested(bool)
-    self.__auth(dict)
-    self.__token(dict)
-    self.__debug(bool)
-    self.__host(string)
-    self.__result(dict)
-
-Returns:
-    obj
-```
-
-#### Function RestAPIController.get(self):
-
-```
-Get All values
-
-Args:
-    None
-
-Returns:
-    self.__result(dict): REST API response
-```
-
-#### Function RestAPIController.get_connect_status(self):
-
-```
-Get connection status
-
-Args:
-    None
-
-Returns:
-    self.__connected(bool)
-```
-
-#### Function RestAPIController.get_item(self, item_key, item_id):
-
-```
-Get one value
-        
-```
-
-#### Function RestAPIController.get_request_status(self):
-
-```
-Get request status
-
-Args:
-    None
-
-Returns:
-    self.__requested
-```
-
-#### Function RestAPIController.request(self, method=None, path=None, args=None):
-
-```
-API Request
-
-Args:
-    method(str): "GET", "PUT" ...
-    path(str): url = host+path
-    args(dict): HTTP args
-
-Returns:
-    True if successful, False otherwise.
-```
-
-
+#### RestAPIController.__enable_debug
+````python
+def RestAPIController.__enable_debug(self):
+````
+><br />
+> Enable Debug <br />
+> -> connection log <br />
+>  <br />
+> <b> Args: </b> <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   None <br />
+>  <br />
+> <b> Returns: </b> <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   None <br />
+> <br />
+#### RestAPIController.__isconnected
+````python
+def RestAPIController.__isconnected(self, timeout=5):
+````
+><br />
+> Test network connection <br />
+>  <br />
+> <b> Args: </b> <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   timeout (int): timeout with a default value. <br />
+>  <br />
+> <b> Returns: </b> <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   bool: The return value. True for success, False otherwise. <br />
+> <br />
+#### RestAPIController.__init__
+````python
+def RestAPIController.__init__(self, *args, **kwargs):
+````
+><br />
+> Init the RestAPIController Class <br />
+> This function define attributes. <br />
+>  <br />
+> <b> Args: </b> <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   *arg/**kwargs <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   auth (dict) <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   token (dict) <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   host (string) <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   DEBUG (bool) <br />
+>  <br />
+> <b> Attributes: </b> <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   self.__connected (bool) <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   self.__requested (bool) <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   self.__auth (dict) <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   self.__token (dict) <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   self.__debug (bool) <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   self.__host (string) <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   self.__result (dict) <br />
+>  <br />
+> <b> Returns: </b> <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   obj <br />
+> <br />
+#### RestAPIController.get
+````python
+def RestAPIController.get(self):
+````
+><br />
+> Get the result <br />
+>  <br />
+> <b> Args: </b> <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   None <br />
+>  <br />
+> <b> Returns: </b> <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   self.__result (dict): REST API response <br />
+> <br />
+#### RestAPIController.get_item
+````python
+def RestAPIController.get_item(self, item_key, item_id):
+````
+><br />
+> Get one value <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    <br />
+> <br />
+#### RestAPIController.isconnected
+````python
+def RestAPIController.isconnected(self):
+````
+><br />
+> Get connection status <br />
+>  <br />
+> <b> Args: </b> <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   None <br />
+>  <br />
+> <b> Returns: </b> <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   bool: The return value. True for success, False otherwise. <br />
+> <br />
+#### RestAPIController.isrequested
+````python
+def RestAPIController.isrequested(self):
+````
+><br />
+> Get request status <br />
+>  <br />
+> <b> Args: </b> <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   None <br />
+>  <br />
+> <b> Returns: </b> <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   bool: The return value. True for success, False otherwise. <br />
+> <br />
+#### RestAPIController.request
+````python
+def RestAPIController.request(self, method=None, path=None, args=None):
+````
+><br />
+> API Request <br />
+>  <br />
+> <b> Args: </b> <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   method (str): "GET", "PUT" ... <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   path (str): url = host+path <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   args (dict): HTTP args <br />
+>  <br />
+> <b> Returns: </b> <br />
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   bool: The return value. True for success, False otherwise. <br />
+> <br />

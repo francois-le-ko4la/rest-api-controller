@@ -7,72 +7,89 @@
 We provide examples to use it.
 
 The following files comprise the `rest-api-controller` package:
-* `LICENSE`: The license file. rest-api-controller is released under the terms
-of the GNU General Public License (GPL), version 3.
+* `LICENSE`: The license file. `rest-api-controller` is released under the
+terms of the GNU General Public License (GPL), version 3.
 * `README.md`: This readme file.
 * `Makefile`: Generic management tasks.
 * `setup.py`: Package and distribution management.
 * `setup.cfg`: The setuptools setup file.
 * `test_rest_api_controller.py` : Test
 
-The package contents itself are in the rest_api_controller directory:
+The package contents itself are in the `rest_api_controller` directory:
 * `__ init __`.py: Initialization file for the Python package.
 * `rest_api_controller/rest_api_controller.py`: The code of interest.
 
 ## Setup:
-
-    git clone https://github.com/francois-le-ko4la/rest-api-controller.git
-    cd rest-api-controller
-    sudo make install
+```shell
+git clone https://github.com/francois-le-ko4la/rest-api-controller.git
+cd rest-api-controller
+make install
 
 ## Test:
+```shell
+make test
+```
 
-    sudo make test
-
-## How to use this Class:
+## Use:
 
 * Import the package
 ```python
-    from rest_api_controller import RestAPIController
+from rest_api_controller import RestAPIController
 ```
 
-* API wo authentication
+* API wo authentication using tests
 ```python
-    import time
-    my_api = RestAPIController(host="http://api.open-notify.org",
-        DEBUG=True)
-    my_api.request("GET", "/iss-now.json")
-    obj=my_api.get()
-    print(obj)
-    print(time.ctime(int(obj['timestamp'])))
-    print(obj['iss_position']['longitude'] + ", " +
-        obj['iss_position']['latitude'])
+import time
+
+
+#init the Class
+my_api = RestAPIController(host="http://api.open-notify.org",
+    DEBUG=True)
+
+# test if we can reach the server
+if my_api.isconnected() is not True:
+    print("Server unreachable...")
+    exit(1)
+
+# send the request
+my_api.request("GET", "/iss-now.json")
+
+# get the request status
+if my_api.isrequested() is not True:
+    print("Request errot...")
+    exit(1)
+
+# use the result
+obj=my_api.get()
+print(obj)
+print(time.ctime(int(obj['timestamp'])))
+print(obj['iss_position']['longitude'] + ", " +
+    obj['iss_position']['latitude'])
 ```
 
 * API OAuth1 (username / token) - GITHUB
 ```python
-    my_github_api = RestAPIController(
-        host = "https://api.github.com",
-        auth = ("*** USERNAME ***", "*** TOKEN ***"),
-        DEBUG= True
-        )
-    my_github_api.request("GET", "/user")
-    print(my_github_api.get())
+my_github_api = RestAPIController(
+    host = "https://api.github.com",
+    auth = ("*** USERNAME ***", "*** TOKEN ***"),
+    DEBUG= True
+    )
+my_github_api.request("GET", "/user")
+print(my_github_api.get())
 ```
 
 * OAuth Token - Facebook
 ```python
-    my_fb_api = RestAPIController(
-        token=("OAuth", "*** TOKEN ***"),
-        #host = "http://httpbin.org/status/404"
-        host = "https://graph.facebook.com",
-        DEBUG = True
-        )
+my_fb_api = RestAPIController(
+    token=("OAuth", "*** TOKEN ***"),
+    host = "https://graph.facebook.com",
+    DEBUG = True
+    )
 
-    my_fb_api.request("GET", "/v2.12/me/taggable_friends",
-         {'fields':'id, name, picture.width(500).height(500).type(large)',
-         'limit':'5000'})
-    friendsList = my_fb_api.get()
+my_fb_api.request("GET", "/v2.12/me/taggable_friends",
+    {'fields':'id, name, picture.width(500).height(500).type(large)',
+    'limit':'5000'})
+friendsList = my_fb_api.get()
 ```
 
 ## Todo:

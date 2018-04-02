@@ -22,30 +22,24 @@ class TestRestAPIController(unittest.TestCase):
 
     """Unittest Class
     """
-
-    def test_rest_api(self):
-        """Global test
-        """
-        my_api = RestAPIController(host="http://api.open-notify.org")
-        self.assertTrue(my_api.request("GET", "/iss-now.json"))
-
-    def test_connection(self):
-        """Assert connection
-        """
-        my_api = RestAPIController(host="http://api.open-notify.org")
-        my_api.request("GET", "/iss-now.json")
-        self.assertTrue(my_api.get_connect_status())
-
+    def test_badurl(self):
+        my_api = RestAPIController(host="http://zefzkekjflze.fzerjf")
+        self.assertFalse(my_api.isconnected())
+    
     def test_request(self):
         """Assert request
         """
         my_api = RestAPIController(host="http://api.open-notify.org")
         my_api.request("GET", "/iss-now.json")
-        self.assertTrue(my_api.get_request_status())
+        self.assertTrue(my_api.isrequested())
 
+    def test_connect(self):
+        """Assert connection
+        """
+        my_api = RestAPIController(host="http://api.open-notify.org")
+        self.assertTrue(my_api.isconnected())
 
 if __name__ == '__main__':
     """If main...
     """
-    print(sys.path)
     unittest.main()

@@ -4,6 +4,7 @@
 import json
 import logging
 import requests
+import socket
 
 
 class RestAPIController(object):
@@ -17,19 +18,19 @@ class RestAPIController(object):
 
         Args:
             *arg/**kwargs
-                auth(dict)
-                token(dict)
-                host(string)
-                DEBUG(bool)
+                auth (dict)
+                token (dict)
+                host (string)
+                DEBUG (bool)
 
         Attributes:
-            self.__connected(bool)
-            self.__requested(bool)
-            self.__auth(dict)
-            self.__token(dict)
-            self.__debug(bool)
-            self.__host(string)
-            self.__result(dict)
+            self.__connected (bool)
+            self.__requested (bool)
+            self.__auth (dict)
+            self.__token (dict)
+            self.__debug (bool)
+            self.__host (string)
+            self.__result (dict)
 
         Returns:
             obj
@@ -56,8 +57,39 @@ class RestAPIController(object):
             self.__host = kwargs.pop('host')
         else:
             print("Host must be provided...")
-            exit()
+            exit(1)
+
+        self.__isconnected()
         self.__result = None
+
+    def isconnected(self):
+        """Get connection status
+
+        Args:
+            None
+
+        Returns:
+            bool: The return value. True for success, False otherwise.
+
+        """
+        return self.__connected
+
+    def __isconnected(self, timeout=5):
+        """Test network connection
+
+        Args:
+            timeout (int): timeout with a default value.
+
+        Returns:
+            bool: The return value. True for success, False otherwise.
+
+        """
+        try:
+            requests.get(self.__host, timeout=timeout)
+            self.__connected = True
+        except OSError:
+            self.__connected = False
+            pass
 
     def __enable_debug(self):
         """Enable Debug
@@ -86,12 +118,12 @@ class RestAPIController(object):
         """API Request
 
         Args:
-            method(str): "GET", "PUT" ...
-            path(str): url = host+path
-            args(dict): HTTP args
+            method (str): "GET", "PUT" ...
+            path (str): url = host+path
+            args (dict): HTTP args
 
         Returns:
-            True if successful, False otherwise.
+            bool: The return value. True for success, False otherwise.
 
         """
         self.__connected = False
@@ -132,13 +164,13 @@ class RestAPIController(object):
         return True
 
     def get(self):
-        """Get All values
+        """Get the result
 
         Args:
             None
 
         Returns:
-            self.__result(dict): REST API response
+            self.__result (dict): REST API response
 
         """
         return self.__result
@@ -148,26 +180,14 @@ class RestAPIController(object):
         """
         return self.__result[item_key][item_id]
 
-    def get_connect_status(self):
-        """Get connection status
-
-        Args:
-            None
-
-        Returns:
-            self.__connected(bool)
-
-        """
-        return self.__connected
-
-    def get_request_status(self):
+    def isrequested(self):
         """Get request status
 
         Args:
             None
 
         Returns:
-            self.__requested
+            bool: The return value. True for success, False otherwise.
 
         """
         return self.__requested
