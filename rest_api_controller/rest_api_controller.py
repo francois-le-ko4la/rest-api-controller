@@ -1,10 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""
 
+ ____           _      _    ____ ___ ____
+|  _ \ ___  ___| |_   / \  |  _ \_ _/ ___|
+| |_) / _ \/ __| __| / _ \ | |_) | | |
+|  _ <  __/\__ \ |_ / ___ \|  __/| | |___
+|_| \_\___||___/\__/_/   \_\_|  |___\____|
+
+
+"""
 import json
 import logging
 import requests
 import socket
+from functools import wraps
 
 
 class RestAPIController(object):
@@ -12,182 +22,184 @@ class RestAPIController(object):
     """ My REST API Controller
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, host, auth=None, token=None, debug=False):
         """Init the RestAPIController Class
         This function define attributes.
 
         Args:
-            *arg/**kwargs
-                auth (dict)
-                token (dict)
-                host (string)
-                DEBUG (bool)
+            host (string)
+            auth (dict)
+            token (dict)
+            debug (bool)
 
         Attributes:
-            self.__connected (bool)
-            self.__requested (bool)
+            self.__host (string)
             self.__auth (dict)
             self.__token (dict)
             self.__debug (bool)
-            self.__host (string)
-            self.__result (dict)
 
         Returns:
             obj
 
         """
-        self.__connected = None
-        self.__requested = None
-        if 'auth' in kwargs:
-            self.__auth = kwargs.pop('auth')
-        else:
-            self.__auth = None
+        self.__auth = auth
+        self.__debug = debug
+        self.__host = host
+        self.__token = None
+        if token is not None:
+            self.__token = {'Authorization': '{} {}'.format(token[0],
+                                                            token[1])}
 
-        if 'token' in kwargs:
-            self.__token = kwargs.pop('token')
-        else:
-            self.__token = None
-
-        if 'DEBUG' in kwargs:
-            self.__debug = kwargs.pop('DEBUG')
-            if self.__debug:
-                self.__enable_debug()
-                print("******* DEBUG")
-        if 'host' in kwargs:
-            self.__host = kwargs.pop('host')
-        else:
-            print("Host must be provided...")
-            exit(1)
-
-        self.__isconnected()
-        self.__result = None
-
-    def isconnected(self):
-        """Get connection status
-
-        Args:
-            None
-
-        Returns:
-            bool: The return value. True for success, False otherwise.
-
-        """
-        return self.__connected
-
-    def __isconnected(self, timeout=5):
+    def __isconnected(func, timeout=5):
         """Test network connection
 
         Args:
+            func: decorated function
             timeout (int): timeout with a default value.
 
         Returns:
-            bool: The return value. True for success, False otherwise.
+            link up: func(self, *args, **kwargs)
+            link down: None
 
         """
-        try:
-            requests.get(self.__host, timeout=timeout)
-            self.__connected = True
-        except OSError:
-            self.__connected = False
-            pass
+        @wraps(func)
+        def wrapper(self, *args, **kwargs):
+            """ wrapper """
+            try:
+                requests.get(self.__host, timeout=timeout)
+                return func(self, *args, **kwargs)
+            except OSError:
+                print("Host {} unreachable...".format(self.__host))
+                return None
+        return wrapper
 
-    def __enable_debug(self):
-        """Enable Debug
+    @__isconnected
+    def isconnected(self):
+        """
+        Provide a link status between this script & REST API server
+        This function is decorated by @__isconnected.
+        If the link is down, then decorator will change the value.
+
+        Args:
+            None
+
+        Returns:
+            True
+
+        """
+        return True
+
+    def __enable_debug(func):
+        """
+        Enable Debug
         -> connection log
 
         Args:
-            None
+            func: decorated function
 
         Returns:
-            None
+            func(self, *args, **kwargs)
 
         """
-        try:
-            import http.client as http_client
-        except ImportError:
-            import httplib as http_client
-        http_client.HTTPConnection.debuglevel = 1
+        @wraps(func)
+        def wrapper(self, *args, **kwargs):
+            """ wrapper """
+            if self.__debug:
+                try:
+                    import http.client as http_client
+                except ImportError:
+                    import httplib as http_client
+                http_client.HTTPConnection.debuglevel = 1
 
-        logging.basicConfig()
-        logging.getLogger().setLevel(logging.DEBUG)
-        requests_log = logging.getLogger("requests.packages.urllib3")
-        requests_log.setLevel(logging.DEBUG)
-        requests_log.propagate = True
+                logging.basicConfig()
+                logging.getLogger().setLevel(logging.DEBUG)
+                requests_log = logging.getLogger("requests.packages.urllib3")
+                requests_log.setLevel(logging.DEBUG)
+                requests_log.propagate = True
+            return func(self, *args, **kwargs)
+        return wrapper
 
-    def request(self, method=None, path=None, args=None):
-        """API Request
+    def __loadjson(func):
+        """
+        Decorator - take the content from REST API server and provide a JSON
 
         Args:
-            method (str): "GET", "PUT" ...
-            path (str): url = host+path
-            args (dict): HTTP args
+            func: decorated function
 
         Returns:
-            bool: The return value. True for success, False otherwise.
+            json
 
         """
-        self.__connected = False
-        self.__requested = False
+        @wraps(func)
+        def wrapper(self, *args, **kwargs):
+            """ wrapper """
+            content = func(self, *args, **kwargs)
+            if content is None:
+                return None
+            try:
+                result = json.loads(content)
+            except ValueError:
+                return None
+            return result
+        return wrapper
 
-        if args is None:
-            args = dict()
+    def __sendrequest(func):
+        """
+        Decorator - Use requests.request and arguments from request()
 
-        if path is not None:
-            path = "{host}{path}".format(host=self.__host, path=path)
+        Args:
+            func: decorated function
 
+        Returns:
+            str: The return value (answer).
+            Content for success, None otherwise.
+
+        """
+
+        @wraps(func)
+        def wrapper(self, *args, **kwargs):
+            """ wrapper """
+            args = func(self, *args, **kwargs)
+            if args is None:
+                return None
+            response = requests.request(**args)
+            try:
+                response.raise_for_status()
+                result = response.content
+            except requests.exceptions.HTTPError as error:
+                print("Error: " + str(error))
+            return result
+        return wrapper
+
+    @__loadjson
+    @__sendrequest
+    @__isconnected
+    @__enable_debug
+    def request(self, cur_method, cur_path, cur_args=None):
+        """
+        Provide all arguments to request.
+        This function is decorated by __enable_debug,
+        __isconnected, __sendrequest, and __loadjson
+
+        Args:
+            cur_method (str): "GET", "PUT" ...
+            cur_path (str): url = host+path
+            cur_args (dict): HTTP args
+
+        Returns:
+            dict(): request's args send to decorators
+
+        """
+
+        my_request = {'method': cur_method,
+                      'url': "{host}{path}".format(host=self.__host,
+                                                   path=cur_path)}
+
+        if cur_args is not None:
+            my_request['params'] = cur_args
+        if self.__auth is not None:
+            my_request['auth'] = self.__auth
         if self.__token is not None:
-            self.__token = {'Authorization': '{} {}'.format(self.__token[0],
-                                                            self.__token[1])}
+            my_request['headers'] = self.__token
 
-        if method is None:
-            method = 'GET'
-
-        response = requests.request(
-            method or "GET",
-            path or "",
-            params=args,
-            headers=self.__token,
-            auth=self.__auth)
-
-        try:
-            response.raise_for_status()
-            self.__connected = True
-        except requests.exceptions.HTTPError as error:
-            # Whoops it wasn't a 200
-            print("Error: " + str(error))
-            return False
-        try:
-            self.__result = json.loads(response.content)
-            self.__requested = True
-        except ValueError:
-            return False
-        return True
-
-    def get(self):
-        """Get the result
-
-        Args:
-            None
-
-        Returns:
-            self.__result (dict): REST API response
-
-        """
-        return self.__result
-
-    def get_item(self, item_key, item_id):
-        """Get one value
-        """
-        return self.__result[item_key][item_id]
-
-    def isrequested(self):
-        """Get request status
-
-        Args:
-            None
-
-        Returns:
-            bool: The return value. True for success, False otherwise.
-
-        """
-        return self.__requested
+        return my_request

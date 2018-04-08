@@ -46,25 +46,18 @@ import time
 my_api = RestAPIController(host="http://api.open-notify.org",
     DEBUG=True)
 
-# test if we can reach the server
-if my_api.isconnected() is not True:
-    print("Server unreachable...")
-    exit(1)
-
 # send the request
-my_api.request("GET", "/iss-now.json")
+result = my_api.request("GET", "/iss-now.json")
 
-# get the request status
-if my_api.isrequested() is not True:
-    print("Request errot...")
-    exit(1)
+# test result
+if result is None:
+    exit()
 
 # use the result
-obj=my_api.get()
-print(obj)
-print(time.ctime(int(obj['timestamp'])))
-print(obj['iss_position']['longitude'] + ", " +
-    obj['iss_position']['latitude'])
+print(result)
+print(time.ctime(int(result['timestamp'])))
+print(result['iss_position']['longitude'] + ", " +
+    result['iss_position']['latitude'])
 ```
 
 * API OAuth1 (username / token) - GITHUB
@@ -75,7 +68,6 @@ my_github_api = RestAPIController(
     DEBUG= True
     )
 my_github_api.request("GET", "/user")
-print(my_github_api.get())
 ```
 
 * OAuth Token - Facebook
@@ -85,11 +77,9 @@ my_fb_api = RestAPIController(
     host = "https://graph.facebook.com",
     DEBUG = True
     )
-
 my_fb_api.request("GET", "/v2.12/me/taggable_friends",
     {'fields':'id, name, picture.width(500).height(500).type(large)',
     'limit':'5000'})
-friendsList = my_fb_api.get()
 ```
 
 ## Todo:

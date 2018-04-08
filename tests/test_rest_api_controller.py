@@ -27,17 +27,8 @@ class TestRestAPIController(unittest.TestCase):
         self.assertFalse(my_api.isconnected())
     
     def test_request(self):
-        """Assert request
-        """
         my_api = RestAPIController(host="http://api.open-notify.org")
-        my_api.request("GET", "/iss-now.json")
-        self.assertTrue(my_api.isrequested())
-
-    def test_connect(self):
-        """Assert connection
-        """
-        my_api = RestAPIController(host="http://api.open-notify.org")
-        self.assertTrue(my_api.isconnected())
+        self.assertTrue(my_api.request("GET", "/iss-now.json") is not None)
 
 if __name__ == '__main__':
     """If main...
