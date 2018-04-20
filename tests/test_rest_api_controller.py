@@ -10,11 +10,8 @@ This script is provided in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 """
+
 import unittest
-import os
-import sys
-sys.path.insert(0, os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '..')))
 from rest_api_controller.rest_api_controller import RestAPIController
 
 
@@ -25,10 +22,11 @@ class TestRestAPIController(unittest.TestCase):
     def test_badurl(self):
         my_api = RestAPIController(host="http://zefzkekjflze.fzerjf")
         self.assertFalse(my_api.isconnected())
-    
+
     def test_request(self):
         my_api = RestAPIController(host="http://api.open-notify.org")
         self.assertTrue(my_api.request("GET", "/iss-now.json") is not None)
+
 
 if __name__ == '__main__':
     """If main...
