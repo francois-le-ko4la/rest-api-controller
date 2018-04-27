@@ -23,6 +23,7 @@ Note:
 """
 
 from setuptools import setup
+from rest_api_controller import __about__
 
 
 def readme():
@@ -34,8 +35,8 @@ def readme():
 
 setup(
     name='rest-api-controller',
-    version='0.1',
-    description='The funniest Rest API controller',
+    version=__about__.__version__,
+    description=__about__.__description__,
     long_description=readme(),
     python_requires='>=3.6',
     classifiers=[
@@ -44,9 +45,9 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Topic :: REST API :: Social Network / Cloud',
         ],
-    url='https://github.com/francois-le-ko4la/rest-api-controller',
-    author='Ko4lA',
-    author_email='francois@le.ko4la.fr',
+    url=__about__.__url__,
+    author=__about__.__author__,
+    author_email=__about__.__email__,
     license='',
     packages=['rest_api_controller'],
     setup_requires=['pytest-runner'],

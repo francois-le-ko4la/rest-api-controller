@@ -18,8 +18,14 @@ default:
 	@echo '    make test       test'
 	@echo
 
+init:
+	@pip3 install -r requirements.txt
+
+dev:
+	@sudo python3 setup.py develop
+
 uninstall:
-	sudo -H pip3 uninstall -y $(PACKAGE_NAME)
+	@sudo -H pip3 uninstall -y $(PACKAGE_NAME)
 
 install:
 	@sudo ./setup.py install
@@ -30,7 +36,9 @@ clean:
 	@sudo find -type f -name '*.pyc' -delete
 
 doc:
-	@export_docstring2md.py -i $(PACKAGE_DIR) -o README.md
+	@pyreverse $(PACKAGE_DIR) -f ALL -o png -p $(PACKAGE_NAME)
+	@mv *.png pictures/
+	@export_docstring2md.py -i $(PACKAGE_DIR) -o README.md -r requirements.txt -t runtime.txt -u pictures/classes_$(PACKAGE_NAME).png
 
 release:
 	@$(MAKE) clean
@@ -47,4 +55,4 @@ publish:
 test:
 	@sudo ./setup.py test
 
-.PHONY: default install uninstall clean test doc publish
+.PHONY: default init dev install uninstall clean test doc publish release

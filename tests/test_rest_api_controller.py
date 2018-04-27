@@ -12,7 +12,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 """
 
 import unittest
-from rest_api_controller.rest_api_controller import RestAPIController
+from rest_api_controller import RestAPIController
 
 
 class TestRestAPIController(unittest.TestCase):

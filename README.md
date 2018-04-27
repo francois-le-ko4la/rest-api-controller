@@ -101,28 +101,47 @@ version 3 of the License, or (at your option) any later version.
 This script is provided in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-## Dev docstring
+## Dev notes
+### Runtime
+
+```
+python-3.6.x
+
+```
+### Requirements
+
+```
+setuptools==36.2.7
+requests==2.18.1
+pycodestyle==2.3.1
+
+```
+### UML Diagram
+![alt text](pictures/classes_rest-api-controller.png)
+
+### Objects
+[RestAPIController()](#restapicontroller)<br />
+[RestAPIController.__enable_debug(func)](#restapicontroller__enable_debugfunc)<br />
+[RestAPIController.__init__(self, host, auth=None, token=None, debug=False)](#restapicontrollerinitself-host-authnone-tokennone-debugfalse)<br />
+[RestAPIController.__isconnected(func, timeout=5)](#restapicontroller__isconnectedfunc-timeout5)<br />
+[RestAPIController.__loadjson(func)](#restapicontroller__loadjsonfunc)<br />
+[RestAPIController.__sendrequest(func)](#restapicontroller__sendrequestfunc)<br />
+[RestAPIController.isconnected(self)](#restapicontrollerisconnectedself)<br />
+[RestAPIController.request(self, cur_method, cur_path, cur_args=None)](#restapicontrollerrequestself-cur_method-cur_path-cur_argsnone)<br />
 
 
-### RestAPIController()
-
-````python
-class RestAPIController():
-````
-
-
+#### RestAPIController()
+```python
+class RestAPIController(object):
+```
 > <br />
 > My REST API Controller<br />
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br />
 > <br />
-
-#### RestAPIController.__enable_debug(func)
-
-````python
+##### RestAPIController.__enable_debug(func)
+```python
 def RestAPIController.__enable_debug(func):
-````
-
-
+```
 > <br />
 > Enable Debug<br />
 > -> connection log<br />
@@ -133,14 +152,10 @@ def RestAPIController.__enable_debug(func):
 > <b>Returns:</b><br />
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  func(self, *args, **kwargs)<br />
 > <br />
-
-#### RestAPIController.__init__(self, host, auth=None, token=None, debug=False)
-
-````python
+##### RestAPIController.__init__(self, host, auth=None, token=None, debug=False)
+```python
 def RestAPIController.__init__(self, host, auth=None, token=None, debug=False):
-````
-
-
+```
 > <br />
 > Init the RestAPIController Class<br />
 > This function define attributes.<br />
@@ -160,14 +175,10 @@ def RestAPIController.__init__(self, host, auth=None, token=None, debug=False):
 > <b>Returns:</b><br />
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  obj<br />
 > <br />
-
-#### RestAPIController.__isconnected(func, timeout=5)
-
-````python
+##### RestAPIController.__isconnected(func, timeout=5)
+```python
 def RestAPIController.__isconnected(func, timeout=5):
-````
-
-
+```
 > <br />
 > Test network connection<br />
 > <br />
@@ -179,14 +190,10 @@ def RestAPIController.__isconnected(func, timeout=5):
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  link up: func(self, *args, **kwargs)<br />
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  link down: None<br />
 > <br />
-
-#### RestAPIController.__loadjson(func)
-
-````python
+##### RestAPIController.__loadjson(func)
+```python
 def RestAPIController.__loadjson(func):
-````
-
-
+```
 > <br />
 > Decorator - take the content from REST API server and provide a JSON<br />
 > <br />
@@ -196,14 +203,10 @@ def RestAPIController.__loadjson(func):
 > <b>Returns:</b><br />
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  json<br />
 > <br />
-
-#### RestAPIController.__sendrequest(func)
-
-````python
+##### RestAPIController.__sendrequest(func)
+```python
 def RestAPIController.__sendrequest(func):
-````
-
-
+```
 > <br />
 > Decorator - Use requests.request and arguments from request()<br />
 > <br />
@@ -214,14 +217,11 @@ def RestAPIController.__sendrequest(func):
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  str: The return value (answer).<br />
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Content for success, None otherwise.<br />
 > <br />
-
-#### RestAPIController.isconnected(self)
-
-````python
+##### RestAPIController.isconnected(self)
+```python
+@__isconnected
 def RestAPIController.isconnected(self):
-````
-
-
+```
 > <br />
 > Provide a link status between this script & REST API server<br />
 > This function is decorated by @__isconnected.<br />
@@ -233,14 +233,14 @@ def RestAPIController.isconnected(self):
 > <b>Returns:</b><br />
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  True<br />
 > <br />
-
-#### RestAPIController.request(self, cur_method, cur_path, cur_args=None)
-
-````python
+##### RestAPIController.request(self, cur_method, cur_path, cur_args=None)
+```python
+@__loadjson
+@__sendrequest
+@__isconnected
+@__enable_debug
 def RestAPIController.request(self, cur_method, cur_path, cur_args=None):
-````
-
-
+```
 > <br />
 > Provide all arguments to request.<br />
 > This function is decorated by __enable_debug,<br />

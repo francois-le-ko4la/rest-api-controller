@@ -106,6 +106,5 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 """
 
-__version__ = '0.1_dev'
-
-from .rest_api_controller import RestAPIController
+import rest_api_controller.__about__
+from rest_api_controller.controller import RestAPIController
