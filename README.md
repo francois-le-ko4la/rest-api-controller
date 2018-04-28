@@ -13,7 +13,7 @@ terms of the GNU General Public License (GPL), version 3.
 * `test_rest_api_controller.py` : Test
 
 The package contents itself are in the `rest_api_controller` directory:
-* `__ init __`.py: Initialization file for the Python package.
+* `__init__`.py: Initialization file for the Python package.
 * `rest_api_controller/rest_api_controller.py`: The code of interest.
 
 ## Setup:
