@@ -53,6 +53,8 @@ publish:
 	@git push
 
 test:
+	@pip3 show $(PACKAGE_NAME)
 	@sudo ./setup.py test
+	@sudo ./setup.py test > last_check.log	
 
 .PHONY: default init dev install uninstall clean test doc publish release
