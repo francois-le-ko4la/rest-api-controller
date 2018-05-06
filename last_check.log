@@ -27,4 +27,4 @@ tests/test_pycodestyle.py::RunPyCodeStyle::test_/home/ko4la/GIT/rest-api-control
 tests/test_pycodestyle.py::RunPyCodeStyle::test_/home/ko4la/GIT/rest-api-controller/tests/test_pycodestyle.py PASSED [ 87%]
 tests/test_pycodestyle.py::RunPyCodeStyle::test_/home/ko4la/GIT/rest-api-controller/tests/use_it.py PASSED [100%]
 
-=========================== 8 passed in 0.97 seconds ===========================
+=========================== 8 passed in 0.96 seconds ===========================

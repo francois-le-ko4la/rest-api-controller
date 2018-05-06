@@ -106,7 +106,7 @@ my_fb_api.request("GET", "/v2.12/me/taggable_friends",
 
 ## License
 
-pytping is distributed under the [GPLv3 license](./LICENSE)
+This package is distributed under the [GPLv3 license](./LICENSE)
 ## Dev notes
 ### Runtime
 
