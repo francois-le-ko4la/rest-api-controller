@@ -2,25 +2,34 @@
 # -*- coding: utf-8 -*-
 """
 
-######  #######  #####  #######            #    ######    ###
-#     # #       #     #    #              # #   #     #    #
-#     # #       #          #             #   #  #     #    #
-######  #####    #####     #     #####  #     # ######     #
-#   #   #             #    #            ####### #          #
-#    #  #       #     #    #            #     # #          #
-#     # #######  #####     #            #     # #         ###
+  ####    ####   #    #   #####  #####    ####   #       #       ######  #####
+ #    #  #    #  ##   #     #    #    #  #    #  #       #       #       #    #
+ #       #    #  # #  #     #    #    #  #    #  #       #       #####   #    #
+ #       #    #  #  # #     #    #####   #    #  #       #       #       #####
+ #    #  #    #  #   ##     #    #   #   #    #  #       #       #       #   #
+  ####    ####   #    #     #    #    #   ####   ######  ######  ######  #    #
 
 """
 import json
 import logging
-import requests
-import socket
 from functools import wraps
+import requests
 
 
 class RestAPIController(object):
 
     """ My REST API Controller
+
+    Use:
+        >>> my_api = RestAPIController(host="http://pi.open-notify.org")
+        >>> print(my_api.request("GET", "/iss-now.json"))
+        Traceback (most recent call last):
+        ...
+        OSError: Host unreachable
+        >>> my_api = RestAPIController(host="http://api.open-notify.org")
+        >>> result = my_api.request("GET", "/iss-now.json")
+        >>> print(result['message'])
+        success
     """
 
     def __init__(self, host, auth=None, token=None, debug=False):
@@ -70,8 +79,7 @@ class RestAPIController(object):
                 requests.get(self.__host, timeout=timeout)
                 return func(self, *args, **kwargs)
             except OSError:
-                print("Host {} unreachable...".format(self.__host))
-                return None
+                raise OSError("Host unreachable")
         return wrapper
 
     @__isconnected

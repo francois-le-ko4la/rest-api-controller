@@ -1,4 +1,4 @@
-# rest-api-controller
+# apicontroller
 ## Description:
 `rest-api-controller` is a Python package to manage REST API requests.
 We provide examples to use it.
@@ -31,7 +31,7 @@ make test
 
 * Import the package
 ```python
-from rest_api_controller import RestAPIController
+from apicontroller import RestAPIController
 ```
 
 * API wo authentication using tests
@@ -88,19 +88,12 @@ my_fb_api.request("GET", "/v2.12/me/taggable_friends",
 - [X] Validate features
 - [X] Write Doc/stringdoc
 - [X] Run PEP8 validation
-- [ ] Clean & last check
-- [ ] Release
+- [X] Clean & last check
+- [X] Release
 
-## Note:
+## License
 
-This script is free software; you can redistribute it and/or
-modify it under the terms of the GNU Lesser General Public
-License as published by the Free Software Foundation; either
-version 3 of the License, or (at your option) any later version.
-
-This script is provided in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+pytping is distributed under the [GPLv3 license](./LICENSE)
 ## Dev notes
 ### Runtime
 
@@ -111,13 +104,13 @@ python-3.6.x
 ### Requirements
 
 ```
-setuptools==36.2.7
-requests==2.18.1
-pycodestyle==2.3.1
+setuptools>=36.2.7
+requests>=2.18.1
+pycodestyle>=2.3.1
 
 ```
 ### UML Diagram
-![alt text](pictures/classes_rest-api-controller.png)
+![alt text](pictures/classes_apicontroller.png)
 
 ### Objects
 [RestAPIController()](#restapicontroller)<br />
@@ -134,10 +127,22 @@ pycodestyle==2.3.1
 ```python
 class RestAPIController(object):
 ```
-> <br />
-> My REST API Controller<br />
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br />
-> <br />
+
+```
+My REST API Controller
+
+Use:
+    >>> my_api = RestAPIController(host="http://pi.open-notify.org")
+    >>> print(my_api.request("GET", "/iss-now.json"))
+    Traceback (most recent call last):
+    ...
+    OSError: Host unreachable
+    >>> my_api = RestAPIController(host="http://api.open-notify.org")
+    >>> result = my_api.request("GET", "/iss-now.json")
+    >>> print(result['message'])
+    success
+```
+
 ##### RestAPIController.__enable_debug(func)
 ```python
 def RestAPIController.__enable_debug(func):

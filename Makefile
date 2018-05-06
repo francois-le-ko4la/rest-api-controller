@@ -1,7 +1,7 @@
 # Makefile
 
-PACKAGE_NAME = `sed -n "/^    name='\(.*\)',$$/s//\1/p" setup.py`
-PACKAGE_DIR = `sed -n "/^    packages=\['\(.*\)'\],$$/s//\1/p" setup.py`
+PACKAGE_NAME = `sudo ./setup.py --name`
+PACKAGE_DIR = $(PACKAGE_NAME)
 MAKE := $(MAKE) --no-print-directory
 SHELL = bash
 

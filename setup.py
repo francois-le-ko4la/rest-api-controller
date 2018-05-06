@@ -23,7 +23,7 @@ Note:
 """
 
 from setuptools import setup
-from rest_api_controller import __about__
+from apicontroller import __about__
 
 
 def readme():
@@ -34,7 +34,7 @@ def readme():
 
 
 setup(
-    name='rest-api-controller',
+    name=__about__.__name__,
     version=__about__.__version__,
     description=__about__.__description__,
     long_description=readme(),
@@ -49,7 +49,7 @@ setup(
     author=__about__.__author__,
     author_email=__about__.__email__,
     license='',
-    packages=['rest_api_controller'],
+    packages=[__about__.__name__],
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
     test_suite="tests.test_rest_api_controller",

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-# rest-api-controller
+# apicontroller
 ## Description:
 `rest-api-controller` is a Python package to manage REST API requests.
 We provide examples to use it.
@@ -34,7 +34,7 @@ make test
 
 * Import the package
 ```python
-from rest_api_controller import RestAPIController
+from apicontroller import RestAPIController
 ```
 
 * API wo authentication using tests
@@ -91,20 +91,14 @@ my_fb_api.request("GET", "/v2.12/me/taggable_friends",
 - [X] Validate features
 - [X] Write Doc/stringdoc
 - [X] Run PEP8 validation
-- [ ] Clean & last check
-- [ ] Release
+- [X] Clean & last check
+- [X] Release
 
-## Note:
+## License
 
-This script is free software; you can redistribute it and/or
-modify it under the terms of the GNU Lesser General Public
-License as published by the Free Software Foundation; either
-version 3 of the License, or (at your option) any later version.
+pytping is distributed under the [GPLv3 license](./LICENSE)
 
-This script is provided in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 """
 
-import rest_api_controller.__about__
-from rest_api_controller.controller import RestAPIController
+import apicontroller.__about__
+from apicontroller.controller import RestAPIController
