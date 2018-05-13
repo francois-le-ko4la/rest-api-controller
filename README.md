@@ -123,15 +123,10 @@ pycodestyle>=2.3.1
 
 ```
 ### UML Diagram
-![alt text](pictures/classes_apicontroller.png)
+![alt text](/home/ko4la/GIT/rest-api-controller/pictures/classes_apicontroller.png)
 
 ### Objects
 [RestAPIController()](#restapicontroller)<br />
-[RestAPIController.__enable_debug(func)](#restapicontroller__enable_debugfunc)<br />
-[RestAPIController.__init__(self, host, auth=None, token=None, debug=False)](#restapicontrollerinitself-host-authnone-tokennone-debugfalse)<br />
-[RestAPIController.__isconnected(func, timeout=5)](#restapicontroller__isconnectedfunc-timeout5)<br />
-[RestAPIController.__loadjson(func)](#restapicontroller__loadjsonfunc)<br />
-[RestAPIController.__sendrequest(func)](#restapicontroller__sendrequestfunc)<br />
 [RestAPIController.isconnected(self)](#restapicontrollerisconnectedself)<br />
 [RestAPIController.request(self, cur_method, cur_path, cur_args=None)](#restapicontrollerrequestself-cur_method-cur_path-cur_argsnone)<br />
 
@@ -156,85 +151,6 @@ Use:
     success
 ```
 
-##### RestAPIController.__enable_debug(func)
-```python
-def RestAPIController.__enable_debug(func):
-```
-> <br />
-> Enable Debug<br />
-> -> connection log<br />
-> <br />
-> <b>Args:</b><br />
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  func: decorated function<br />
-> <br />
-> <b>Returns:</b><br />
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  func(self, *args, **kwargs)<br />
-> <br />
-##### RestAPIController.__init__(self, host, auth=None, token=None, debug=False)
-```python
-def RestAPIController.__init__(self, host, auth=None, token=None, debug=False):
-```
-> <br />
-> Init the RestAPIController Class<br />
-> This function define attributes.<br />
-> <br />
-> <b>Args:</b><br />
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  host (string)<br />
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  auth (dict)<br />
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  token (dict)<br />
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  debug (bool)<br />
-> <br />
-> <b>Attributes:</b><br />
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  self.__host (string)<br />
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  self.__auth (dict)<br />
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  self.__token (dict)<br />
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  self.__debug (bool)<br />
-> <br />
-> <b>Returns:</b><br />
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  obj<br />
-> <br />
-##### RestAPIController.__isconnected(func, timeout=5)
-```python
-def RestAPIController.__isconnected(func, timeout=5):
-```
-> <br />
-> Test network connection<br />
-> <br />
-> <b>Args:</b><br />
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  func: decorated function<br />
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  timeout (int): timeout with a default value.<br />
-> <br />
-> <b>Returns:</b><br />
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  link up: func(self, *args, **kwargs)<br />
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  link down: None<br />
-> <br />
-##### RestAPIController.__loadjson(func)
-```python
-def RestAPIController.__loadjson(func):
-```
-> <br />
-> Decorator - take the content from REST API server and provide a JSON<br />
-> <br />
-> <b>Args:</b><br />
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  func: decorated function<br />
-> <br />
-> <b>Returns:</b><br />
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  json<br />
-> <br />
-##### RestAPIController.__sendrequest(func)
-```python
-def RestAPIController.__sendrequest(func):
-```
-> <br />
-> Decorator - Use requests.request and arguments from request()<br />
-> <br />
-> <b>Args:</b><br />
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  func: decorated function<br />
-> <br />
-> <b>Returns:</b><br />
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  str: The return value (answer).<br />
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Content for success, None otherwise.<br />
-> <br />
 ##### RestAPIController.isconnected(self)
 ```python
 @__isconnected

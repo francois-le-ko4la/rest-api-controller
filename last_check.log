@@ -16,15 +16,17 @@ running build_ext
 platform linux -- Python 3.6.5, pytest-3.5.1, py-1.5.3, pluggy-0.6.0 -- /usr/bin/python3
 cachedir: .pytest_cache
 rootdir: /home/ko4la/GIT/rest-api-controller, inifile: setup.cfg
-collecting ... collected 8 items
+collecting ... collected 10 items
 
-tests/test_doctest.py::RunDocTest::test_mod_controller.py PASSED         [ 12%]
-tests/test_pycodestyle.py::RunPyCodeStyle::test_/home/ko4la/GIT/rest-api-controller/apicontroller/__about__.py PASSED [ 25%]
-tests/test_pycodestyle.py::RunPyCodeStyle::test_/home/ko4la/GIT/rest-api-controller/apicontroller/__init__.py PASSED [ 37%]
-tests/test_pycodestyle.py::RunPyCodeStyle::test_/home/ko4la/GIT/rest-api-controller/apicontroller/controller.py PASSED [ 50%]
-tests/test_pycodestyle.py::RunPyCodeStyle::test_/home/ko4la/GIT/rest-api-controller/setup.py PASSED [ 62%]
-tests/test_pycodestyle.py::RunPyCodeStyle::test_/home/ko4la/GIT/rest-api-controller/tests/test_doctest.py PASSED [ 75%]
-tests/test_pycodestyle.py::RunPyCodeStyle::test_/home/ko4la/GIT/rest-api-controller/tests/test_pycodestyle.py PASSED [ 87%]
-tests/test_pycodestyle.py::RunPyCodeStyle::test_/home/ko4la/GIT/rest-api-controller/tests/use_it.py PASSED [100%]
+tests/test_doctest.py::RunDocTest::test_mod___about__.py PASSED          [ 10%]
+tests/test_doctest.py::RunDocTest::test_mod___init__.py PASSED           [ 20%]
+tests/test_doctest.py::RunDocTest::test_mod_controller.py PASSED         [ 30%]
+tests/test_pycodestyle.py::RunPyCodeStyle::test___about__.py PASSED      [ 40%]
+tests/test_pycodestyle.py::RunPyCodeStyle::test___init__.py PASSED       [ 50%]
+tests/test_pycodestyle.py::RunPyCodeStyle::test_controller.py PASSED     [ 60%]
+tests/test_pycodestyle.py::RunPyCodeStyle::test_setup.py PASSED          [ 70%]
+tests/test_pycodestyle.py::RunPyCodeStyle::test_test_doctest.py PASSED   [ 80%]
+tests/test_pycodestyle.py::RunPyCodeStyle::test_test_pycodestyle.py PASSED [ 90%]
+tests/test_pycodestyle.py::RunPyCodeStyle::test_use_it.py PASSED         [100%]
 
-=========================== 8 passed in 0.96 seconds ===========================
+========================== 10 passed in 1.23 seconds ===========================

@@ -12,7 +12,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 """
 
 __version__ = '0.1.5'
-__name__ = 'apicontroller'
+__pkg_name__ = 'apicontroller'
 __root_dir__ = 'apicontroller'
 __author__ = 'Ko4lA'
 __email__ = 'francois@le.ko4la.fr'
