@@ -123,7 +123,7 @@ pycodestyle>=2.3.1
 
 ```
 ### UML Diagram
-![alt text](/home/ko4la/GIT/rest-api-controller/pictures/classes_apicontroller.png)
+![alt text](pictures/classes_apicontroller.png)
 
 ### Objects
 [RestAPIController()](#restapicontroller)<br />
