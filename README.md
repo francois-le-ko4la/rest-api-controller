@@ -127,11 +127,7 @@ pycodestyle>=2.3.1
 
 ### Objects
 [RestAPIController()](#restapicontroller)<br />
-[wrapper()](#wrapper)<br />
 [RestAPIController.isconnected()](#restapicontrollerisconnected)<br />
-[wrapper()](#wrapper)<br />
-[wrapper()](#wrapper)<br />
-[wrapper()](#wrapper)<br />
 [RestAPIController.request()](#restapicontrollerrequest)<br />
 
 #### RestAPIController()
@@ -155,14 +151,6 @@ Use:
     'success'
 ```
 
-#### wrapper()
-```python
-@wraps(func)
-def wrapper(self, *args, **kwargs):
-```
-> <br />
-> wrapper <br />
-> <br />
 ##### RestAPIController.isconnected()
 ```python
 @__isconnected
@@ -178,30 +166,6 @@ def RestAPIController.isconnected(self):
 > <br />
 > <b>Returns:</b><br />
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  True<br />
-> <br />
-#### wrapper()
-```python
-@wraps(func)
-def wrapper(self, *args, **kwargs):
-```
-> <br />
-> wrapper <br />
-> <br />
-#### wrapper()
-```python
-@wraps(func)
-def wrapper(self, *args, **kwargs):
-```
-> <br />
-> wrapper <br />
-> <br />
-#### wrapper()
-```python
-@wraps(func)
-def wrapper(self, *args, **kwargs):
-```
-> <br />
-> wrapper <br />
 > <br />
 ##### RestAPIController.request()
 ```python
