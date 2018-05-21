@@ -113,5 +113,9 @@ This package is distributed under the [GPLv3 license](./LICENSE)
 
 """
 
-import apicontroller.__about__
+from apicontroller import __about__
 from apicontroller.controller import RestAPIController
+
+__version__ = __about__.__version__
+__author__ = __about__.__author__
+__license__ = __about__.__license__

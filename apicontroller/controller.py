@@ -21,6 +21,7 @@ class RestAPIController(object):
     """ My REST API Controller
 
     Use:
+        >>> # oups
         >>> my_api = RestAPIController(host="http://pi.open-notify.org")
         >>> print(my_api.request("GET", "/iss-now.json"))
         Traceback (most recent call last):
@@ -28,8 +29,8 @@ class RestAPIController(object):
         OSError: Host unreachable
         >>> my_api = RestAPIController(host="http://api.open-notify.org")
         >>> result = my_api.request("GET", "/iss-now.json")
-        >>> print(result['message'])
-        success
+        >>> result['message']
+        'success'
     """
 
     def __init__(self, host, auth=None, token=None, debug=False):
@@ -212,3 +213,8 @@ class RestAPIController(object):
             my_request['headers'] = self.__token
 
         return my_request
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()

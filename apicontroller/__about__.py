@@ -11,10 +11,11 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 """
 
-__version__ = '0.1.5'
+__version__ = '0.1.6'
 __pkg_name__ = 'apicontroller'
 __root_dir__ = 'apicontroller'
 __author__ = 'Ko4lA'
 __email__ = 'francois@le.ko4la.fr'
+__license__ = 'GPL'
 __description__ = 'The funniest Rest API controller'
 __url__ = 'https://github.com/francois-le-ko4la/rest-api-controller.git'

@@ -107,7 +107,7 @@ my_fb_api.request("GET", "/v2.12/me/taggable_friends",
 ## License
 
 This package is distributed under the [GPLv3 license](./LICENSE)
-## Dev notes
+
 ### Runtime
 
 ```
@@ -127,9 +127,12 @@ pycodestyle>=2.3.1
 
 ### Objects
 [RestAPIController()](#restapicontroller)<br />
-[RestAPIController.isconnected(self)](#restapicontrollerisconnectedself)<br />
-[RestAPIController.request(self, cur_method, cur_path, cur_args=None)](#restapicontrollerrequestself-cur_method-cur_path-cur_argsnone)<br />
-
+[wrapper()](#wrapper)<br />
+[RestAPIController.isconnected()](#restapicontrollerisconnected)<br />
+[wrapper()](#wrapper)<br />
+[wrapper()](#wrapper)<br />
+[wrapper()](#wrapper)<br />
+[RestAPIController.request()](#restapicontrollerrequest)<br />
 
 #### RestAPIController()
 ```python
@@ -140,6 +143,7 @@ class RestAPIController(object):
 My REST API Controller
 
 Use:
+    >>> # oups
     >>> my_api = RestAPIController(host="http://pi.open-notify.org")
     >>> print(my_api.request("GET", "/iss-now.json"))
     Traceback (most recent call last):
@@ -147,11 +151,19 @@ Use:
     OSError: Host unreachable
     >>> my_api = RestAPIController(host="http://api.open-notify.org")
     >>> result = my_api.request("GET", "/iss-now.json")
-    >>> print(result['message'])
-    success
+    >>> result['message']
+    'success'
 ```
 
-##### RestAPIController.isconnected(self)
+#### wrapper()
+```python
+@wraps(func)
+def wrapper(self, *args, **kwargs):
+```
+> <br />
+> wrapper <br />
+> <br />
+##### RestAPIController.isconnected()
 ```python
 @__isconnected
 def RestAPIController.isconnected(self):
@@ -167,7 +179,31 @@ def RestAPIController.isconnected(self):
 > <b>Returns:</b><br />
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  True<br />
 > <br />
-##### RestAPIController.request(self, cur_method, cur_path, cur_args=None)
+#### wrapper()
+```python
+@wraps(func)
+def wrapper(self, *args, **kwargs):
+```
+> <br />
+> wrapper <br />
+> <br />
+#### wrapper()
+```python
+@wraps(func)
+def wrapper(self, *args, **kwargs):
+```
+> <br />
+> wrapper <br />
+> <br />
+#### wrapper()
+```python
+@wraps(func)
+def wrapper(self, *args, **kwargs):
+```
+> <br />
+> wrapper <br />
+> <br />
+##### RestAPIController.request()
 ```python
 @__loadjson
 @__sendrequest
@@ -188,3 +224,4 @@ def RestAPIController.request(self, cur_method, cur_path, cur_args=None):
 > <b>Returns:</b><br />
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  dict(): request's args send to decorators<br />
 > <br />
+
