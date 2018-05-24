@@ -1,12 +1,8 @@
 running pytest
-Searching for pytest
-Best match: pytest 3.5.1
-Processing pytest-3.5.1-py3.6.egg
-
-Using /home/ko4la/GIT/rest-api-controller/.eggs/pytest-3.5.1-py3.6.egg
 running egg_info
 writing apicontroller.egg-info/PKG-INFO
 writing dependency_links to apicontroller.egg-info/dependency_links.txt
+writing requirements to apicontroller.egg-info/requires.txt
 writing top-level names to apicontroller.egg-info/top_level.txt
 reading manifest file 'apicontroller.egg-info/SOURCES.txt'
 reading manifest template 'MANIFEST.in'
@@ -16,17 +12,19 @@ running build_ext
 platform linux -- Python 3.6.5, pytest-3.5.1, py-1.5.3, pluggy-0.6.0 -- /usr/bin/python3
 cachedir: .pytest_cache
 rootdir: /home/ko4la/GIT/rest-api-controller, inifile: setup.cfg
-collecting ... collected 10 items
+collecting ... collected 12 items
 
-tests/test_doctest.py::RunDocTest::test_mod___about__.py PASSED          [ 10%]
-tests/test_doctest.py::RunDocTest::test_mod___init__.py PASSED           [ 20%]
-tests/test_doctest.py::RunDocTest::test_mod_controller.py PASSED         [ 30%]
-tests/test_pycodestyle.py::RunPyCodeStyle::test___about__.py PASSED      [ 40%]
+tests/test_doctest.py::RunDocTest::test_mod___about__.py PASSED          [  8%]
+tests/test_doctest.py::RunDocTest::test_mod___init__.py PASSED           [ 16%]
+tests/test_doctest.py::RunDocTest::test_mod_controller.py PASSED         [ 25%]
+tests/test_doctest.py::RunDocTest::test_mod_exceptions.py PASSED         [ 33%]
+tests/test_pycodestyle.py::RunPyCodeStyle::test___about__.py PASSED      [ 41%]
 tests/test_pycodestyle.py::RunPyCodeStyle::test___init__.py PASSED       [ 50%]
-tests/test_pycodestyle.py::RunPyCodeStyle::test_controller.py PASSED     [ 60%]
-tests/test_pycodestyle.py::RunPyCodeStyle::test_setup.py PASSED          [ 70%]
-tests/test_pycodestyle.py::RunPyCodeStyle::test_test_doctest.py PASSED   [ 80%]
-tests/test_pycodestyle.py::RunPyCodeStyle::test_test_pycodestyle.py PASSED [ 90%]
+tests/test_pycodestyle.py::RunPyCodeStyle::test_controller.py PASSED     [ 58%]
+tests/test_pycodestyle.py::RunPyCodeStyle::test_exceptions.py PASSED     [ 66%]
+tests/test_pycodestyle.py::RunPyCodeStyle::test_setup.py PASSED          [ 75%]
+tests/test_pycodestyle.py::RunPyCodeStyle::test_test_doctest.py PASSED   [ 83%]
+tests/test_pycodestyle.py::RunPyCodeStyle::test_test_pycodestyle.py PASSED [ 91%]
 tests/test_pycodestyle.py::RunPyCodeStyle::test_use_it.py PASSED         [100%]
 
-========================== 10 passed in 1.24 seconds ===========================
+========================== 12 passed in 1.98 seconds ===========================

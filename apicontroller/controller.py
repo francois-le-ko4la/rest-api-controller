@@ -14,6 +14,8 @@ import json
 import logging
 from functools import wraps
 import requests
+from apicontroller.exceptions import APIError
+from apicontroller.exceptions import APIConnectionError, APIHTTPError
 
 
 class RestAPIController(object):
@@ -26,7 +28,18 @@ class RestAPIController(object):
         >>> print(my_api.request("GET", "/iss-now.json"))
         Traceback (most recent call last):
         ...
-        OSError: Host unreachable
+        apicontroller.exceptions.APIConnectionError: Unable to connect
+        >>> # oups 2
+        >>> my_api = RestAPIController(host="http://api.open-notify.org")
+        >>> result = my_api.request("GREP", "/iss-now.json")
+        Traceback (most recent call last):
+        ...
+        apicontroller.exceptions.APIHTTPError: Client Error
+        >>> # oups 3
+        >>> my_api = RestAPIController(host="api.open-notify.org")
+        Traceback (most recent call last):
+        ...
+        apicontroller.exceptions.APIError: Hostname is not validated
         >>> my_api = RestAPIController(host="http://api.open-notify.org")
         >>> result = my_api.request("GET", "/iss-now.json")
         >>> result['message']
@@ -55,11 +68,23 @@ class RestAPIController(object):
         """
         self.__auth = auth
         self.__debug = debug
-        self.__host = host
+        self.__host = ""
+        self.host = host
         self.__token = None
         if token is not None:
             self.__token = {'Authorization': '{} {}'.format(token[0],
                                                             token[1])}
+
+    @property
+    def host(self):
+        return self.__host
+
+    @host.setter
+    def host(self, value):
+        if value.upper().startswith(("HTTP://", "HTTPS://")):
+            self.__host = value
+        else:
+            raise APIError("Hostname is not validated")
 
     def __isconnected(func, timeout=5):
         """Test network connection
@@ -79,8 +104,8 @@ class RestAPIController(object):
             try:
                 requests.get(self.__host, timeout=timeout)
                 return func(self, *args, **kwargs)
-            except OSError:
-                raise OSError("Host unreachable")
+            except requests.exceptions.ConnectionError as e:
+                raise APIConnectionError(e)
         return wrapper
 
     @__isconnected
@@ -162,7 +187,7 @@ class RestAPIController(object):
 
         Returns:
             str: The return value (answer).
-            Content for success, None otherwise.
+            Content for success, raise APIError otherwise.
 
         """
 
@@ -177,7 +202,7 @@ class RestAPIController(object):
                 response.raise_for_status()
                 result = response.content
             except requests.exceptions.HTTPError as error:
-                print("Error: " + str(error))
+                raise APIHTTPError(error)
             return result
         return wrapper
 

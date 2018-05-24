@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-# apicontroller
+"""apicontroller
 ## Description:
 `apicontroller` is a Python package to manage REST API requests.
 We provide examples to use it.

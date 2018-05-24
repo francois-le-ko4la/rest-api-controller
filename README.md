@@ -1,4 +1,4 @@
-# apicontroller
+apicontroller
 ## Description:
 `apicontroller` is a Python package to manage REST API requests.
 We provide examples to use it.
@@ -127,8 +127,12 @@ pycodestyle>=2.3.1
 
 ### Objects
 [RestAPIController()](#restapicontroller)<br />
+[@Property RestAPIController.host](#property-restapicontrollerhost)<br />
 [RestAPIController.isconnected()](#restapicontrollerisconnected)<br />
 [RestAPIController.request()](#restapicontrollerrequest)<br />
+[APIError()](#apierror)<br />
+[APIConnectionError()](#apiconnectionerror)<br />
+[APIHTTPError()](#apihttperror)<br />
 
 #### RestAPIController()
 ```python
@@ -144,13 +148,32 @@ Use:
     >>> print(my_api.request("GET", "/iss-now.json"))
     Traceback (most recent call last):
     ...
-    OSError: Host unreachable
+    apicontroller.exceptions.APIConnectionError: Unable to connect
+    >>> # oups 2
+    >>> my_api = RestAPIController(host="http://api.open-notify.org")
+    >>> result = my_api.request("GREP", "/iss-now.json")
+    Traceback (most recent call last):
+    ...
+    apicontroller.exceptions.APIHTTPError: Client Error
+    >>> # oups 3
+    >>> my_api = RestAPIController(host="api.open-notify.org")
+    Traceback (most recent call last):
+    ...
+    apicontroller.exceptions.APIError: Hostname is not validated
     >>> my_api = RestAPIController(host="http://api.open-notify.org")
     >>> result = my_api.request("GET", "/iss-now.json")
     >>> result['message']
     'success'
 ```
 
+##### @Property RestAPIController.host
+```python
+@property
+def RestAPIController.host(self):
+```
+> <br />
+> None<br />
+> <br />
 ##### RestAPIController.isconnected()
 ```python
 @__isconnected
@@ -188,4 +211,31 @@ def RestAPIController.request(self, cur_method, cur_path, cur_args=None):
 > <b>Returns:</b><br />
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  dict(): request's args send to decorators<br />
 > <br />
+#### APIError()
+```python
+class APIError(Exception):
+```
+
+```
+Generic exception for apicontroller
+```
+
+#### APIConnectionError()
+```python
+class APIConnectionError(APIError):
+```
+
+```
+None
+```
+
+#### APIHTTPError()
+```python
+class APIHTTPError(APIError):
+```
+
+```
+None
+```
+
 
