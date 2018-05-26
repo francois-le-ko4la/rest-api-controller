@@ -74,15 +74,15 @@ my_fb_api.request("GET", "/v2.12/me/taggable_friends",
 ├── apicontroller
 │   ├── __about__.py
 │   ├── controller.py
+│   ├── exceptions.py
 │   └── __init__.py
+├── last_check.log
 ├── LICENSE
 ├── Makefile
-├── MANIFEST.in
 ├── pictures
 │   ├── classes_apicontroller.png
 │   └── packages_apicontroller.png
 ├── README.md
-├── requirements.txt
 ├── runtime.txt
 ├── setup.cfg
 ├── setup.py
@@ -103,6 +103,9 @@ my_fb_api.request("GET", "/v2.12/me/taggable_friends",
 - [X] Run PEP8 validation
 - [X] Clean & last check
 - [X] Release
+- [X] improve (un)install
+- [X] manage global var
+- [X] Release: 0.2.0
 
 ## License
 
@@ -112,14 +115,6 @@ This package is distributed under the [GPLv3 license](./LICENSE)
 
 ```
 python-3.6.x
-
-```
-### Requirements
-
-```
-setuptools>=36.2.7
-requests>=2.18.1
-pycodestyle>=2.3.1
 
 ```
 ### UML Diagram

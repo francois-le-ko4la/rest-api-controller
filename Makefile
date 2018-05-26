@@ -19,23 +19,27 @@ default:
 	@echo
 
 dev:
-	@sudo python3 setup.py develop
-
-uninstall:
-	@sudo -H pip3 uninstall -y $(PACKAGE_NAME)
+	@pip3 install -e .
 
 install:
-	@sudo python3 setup.py install
+	@$(MAKE) init
+	@pip3 install .
+
+uninstall:
+	@pip3 uninstall -y $(PACKAGE_NAME)
 
 clean:
-	@sudo rm -Rf *.egg *.egg-info .cache .coverage .tox build dist docs/build htmlcov .pytest_cache
+	@sudo rm -Rf .eggs *.egg-info .cache .coverage .tox build dist docs/build htmlcov .pytest_cache
 	@sudo find -depth -type d -name __pycache__ -exec rm -Rf {} \;
 	@sudo find -type f -name '*.pyc' -delete
 
-doc:
-	@pyreverse $(PACKAGE_DIR) -f ALL -o png -p $(PACKAGE_NAME)
+fulldoc:
+	@pyreverse $(PACKAGE_NAME) -f ALL -o png -p $(PACKAGE_NAME)
 	@mv *.png pictures/
-	@export_docstring2md.py -i $(PACKAGE_DIR) -o README.md -r requirements.txt -t runtime.txt -u pictures/classes_$(PACKAGE_NAME).png
+	@$(MAKE) doc
+
+doc:
+	@export_docstring2md.py -i $(PACKAGE_DIR) -o README.md -t runtime.txt -u pictures/classes_$(PACKAGE_NAME).png
 
 release:
 	@$(MAKE) clean
@@ -44,7 +48,6 @@ release:
 
 publish:
 	@$(MAKE) test
-	@pipreqs .
 	@git add .
 	@git commit
 	@git push
@@ -52,6 +55,6 @@ publish:
 test:
 	@pip3 show $(PACKAGE_NAME)
 	@sudo ./setup.py test
-	@sudo ./setup.py test > last_check.log	
+	@sudo ./setup.py test > last_check.log
 
 .PHONY: default init dev install uninstall clean test doc publish release
