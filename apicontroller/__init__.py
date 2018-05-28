@@ -108,6 +108,10 @@ my_fb_api.request("GET", "/v2.12/me/taggable_friends",
 - [X] improve (un)install
 - [X] manage global var
 - [X] Release: 0.2.0
+- [X] improve package var
+- [X] improve exceptions
+- [X] Release: 0.3.0
+
 
 ## License
 
@@ -115,9 +119,6 @@ This package is distributed under the [GPLv3 license](./LICENSE)
 
 """
 
-from apicontroller import __about__
+from apicontroller.__about__ import *
 from apicontroller.controller import RestAPIController
-
-__version__ = __about__.__version__
-__author__ = __about__.__author__
-__license__ = __about__.__license__
+from apicontroller.exceptions import *

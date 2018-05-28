@@ -13,21 +13,42 @@
 
 
 class APIError(Exception):
-    """Generic exception for apicontroller"""
-    def __init__(self, msg):
-        super(APIError, self).__init__(msg)
+    """
+    Generic exception for apicontroller
+    """
+    pass
 
 
 class APIConnectionError(APIError):
-    def __init__(self, original_exception):
-        super(APIError, self).__init__("Unable to connect")
-        self.original_exception = original_exception
+    """
+    Error: the server is unreachable.
+    """
+    def __init__(self, host):
+        super().__init__("\"{}\" unreachable!".format(host))
 
 
 class APIHTTPError(APIError):
-    def __init__(self, original_exception):
-        super(APIHTTPError, self).__init__("Client Error")
-        self.original_exception = original_exception
+    """
+    Error: bad request.
+    """
+    def __init__(self, request):
+        super().__init__("Request Error : {}.".format(request))
+
+
+class APIBadHostnameError(APIError):
+    """
+    Error: hostname is not validated.
+    """
+    def __init__(self, host):
+        super().__init__("\"{}\" is not validated!".format(host))
+
+
+__all__ = [
+    'APIError',
+    'APIConnectionError',
+    'APIHTTPError',
+    'APIBadHostnameError'
+]
 
 
 if __name__ == "__main__":

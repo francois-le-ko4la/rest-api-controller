@@ -106,21 +106,29 @@ my_fb_api.request("GET", "/v2.12/me/taggable_friends",
 - [X] improve (un)install
 - [X] manage global var
 - [X] Release: 0.2.0
+- [X] improve package var
+- [X] improve exceptions
+- [X] Release: 0.3.0
+
 
 ## License
 
 This package is distributed under the [GPLv3 license](./LICENSE)
-
 ### Runtime
 
 ```
+
 python-3.6.x
 
+
 ```
+
 ### UML Diagram
 ![alt text](pictures/classes_apicontroller.png)
 
+
 ### Objects
+
 [RestAPIController()](#restapicontroller)<br />
 [@Property RestAPIController.host](#property-restapicontrollerhost)<br />
 [RestAPIController.isconnected()](#restapicontrollerisconnected)<br />
@@ -128,6 +136,8 @@ python-3.6.x
 [APIError()](#apierror)<br />
 [APIConnectionError()](#apiconnectionerror)<br />
 [APIHTTPError()](#apihttperror)<br />
+[APIBadHostnameError()](#apibadhostnameerror)<br />
+
 
 #### RestAPIController()
 ```python
@@ -139,22 +149,22 @@ My REST API Controller
 
 Use:
     >>> # oups
-    >>> my_api = RestAPIController(host="http://pi.open-notify.org")
+    >>> my_api = RestAPIController(host="http://pz.g")
     >>> print(my_api.request("GET", "/iss-now.json"))
     Traceback (most recent call last):
     ...
-    apicontroller.exceptions.APIConnectionError: Unable to connect
+    apicontroller.exceptions.APIConnectionError: "http://pz.g" unreachable!
     >>> # oups 2
     >>> my_api = RestAPIController(host="http://api.open-notify.org")
     >>> result = my_api.request("GREP", "/iss-now.json")
     Traceback (most recent call last):
     ...
-    apicontroller.exceptions.APIHTTPError: Client Error
+    apicontroller.exceptions.APIHTTPError: Client Error - {'method': 'GREP', 'url': 'http://api.open-notify.org/iss-now.json'}.
     >>> # oups 3
     >>> my_api = RestAPIController(host="api.open-notify.org")
     Traceback (most recent call last):
     ...
-    apicontroller.exceptions.APIError: Hostname is not validated
+    apicontroller.exceptions.APIBadHostnameError: "api.open-notify.org" is not validated!
     >>> my_api = RestAPIController(host="http://api.open-notify.org")
     >>> result = my_api.request("GET", "/iss-now.json")
     >>> result['message']
@@ -233,4 +243,11 @@ class APIHTTPError(APIError):
 None
 ```
 
+#### APIBadHostnameError()
+```python
+class APIBadHostnameError(APIError):
+```
 
+```
+None
+```

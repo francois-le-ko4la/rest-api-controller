@@ -14,7 +14,7 @@ import json
 import logging
 from functools import wraps
 import requests
-from apicontroller.exceptions import APIError
+from apicontroller.exceptions import APIError, APIBadHostnameError
 from apicontroller.exceptions import APIConnectionError, APIHTTPError
 
 
@@ -24,22 +24,24 @@ class RestAPIController(object):
 
     Use:
         >>> # oups
-        >>> my_api = RestAPIController(host="http://pi.open-notify.org")
+        >>> my_api = RestAPIController(host="http://pz.g")
         >>> print(my_api.request("GET", "/iss-now.json"))
         Traceback (most recent call last):
         ...
-        apicontroller.exceptions.APIConnectionError: Unable to connect
+        apicontroller.exceptions.APIConnectionError: "http://pz.g" unreachable!
         >>> # oups 2
         >>> my_api = RestAPIController(host="http://api.open-notify.org")
         >>> result = my_api.request("GREP", "/iss-now.json")
         Traceback (most recent call last):
         ...
-        apicontroller.exceptions.APIHTTPError: Client Error
+        apicontroller.exceptions.APIHTTPError: Request Error : \
+{'method': 'GREP', 'url': 'http://api.open-notify.org/iss-now.json'}.
         >>> # oups 3
         >>> my_api = RestAPIController(host="api.open-notify.org")
         Traceback (most recent call last):
         ...
-        apicontroller.exceptions.APIError: Hostname is not validated
+        apicontroller.exceptions.APIBadHostnameError: \
+"api.open-notify.org" is not validated!
         >>> my_api = RestAPIController(host="http://api.open-notify.org")
         >>> result = my_api.request("GET", "/iss-now.json")
         >>> result['message']
@@ -84,7 +86,7 @@ class RestAPIController(object):
         if value.upper().startswith(("HTTP://", "HTTPS://")):
             self.__host = value
         else:
-            raise APIError("Hostname is not validated")
+            raise APIBadHostnameError(value)
 
     def __isconnected(func, timeout=5):
         """Test network connection
@@ -105,7 +107,7 @@ class RestAPIController(object):
                 requests.get(self.__host, timeout=timeout)
                 return func(self, *args, **kwargs)
             except requests.exceptions.ConnectionError as e:
-                raise APIConnectionError(e)
+                raise APIConnectionError(self.__host)
         return wrapper
 
     @__isconnected
@@ -202,7 +204,7 @@ class RestAPIController(object):
                 response.raise_for_status()
                 result = response.content
             except requests.exceptions.HTTPError as error:
-                raise APIHTTPError(error)
+                raise APIHTTPError(str(args))
             return result
         return wrapper
 

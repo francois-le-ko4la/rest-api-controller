@@ -16,10 +16,10 @@ import pathlib
 import doctest
 import unittest
 import subprocess
-from apicontroller import __about__
+from apicontroller.__about__ import __pkg_name__
 
 
-blacklist = ["__init__.py", "__about__.py", "__config__.py"]
+blacklist = ["__init__.py", "__about__.py", "__config__.py", "__param__.py"]
 
 
 def ch(current_file):
@@ -39,7 +39,7 @@ class RunDocTest(unittest.TestCase):
             self.assertTrue(False)
 
 
-code_folder = '../' + __about__.__pkg_name__ + '/'
+code_folder = '../' + __pkg_name__ + '/'
 path = pathlib.Path(
     pathlib.PurePath(
         pathlib.Path(__file__).resolve().parent, code_folder)

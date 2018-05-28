@@ -24,4 +24,4 @@ tests/test_pycodestyle.py::RunPyCodeStyle::test_test_doctest.py PASSED   [ 80%]
 tests/test_pycodestyle.py::RunPyCodeStyle::test_test_pycodestyle.py PASSED [ 90%]
 tests/test_pycodestyle.py::RunPyCodeStyle::test_use_it.py PASSED         [100%]
 
-========================== 10 passed in 1.83 seconds ===========================
+========================== 10 passed in 1.85 seconds ===========================
