@@ -15,7 +15,11 @@ Test:
 from setuptools import setup, find_packages
 from setuptools.config import read_configuration
 import warnings
+import sys
 
+
+if not sys.version_info[0] == 3:
+        sys.exit("Sorry, your Python is not supported (yet)")
 
 warnings.filterwarnings("ignore")
 CFG = read_configuration('./setup.cfg')
